@@ -6,7 +6,6 @@
 
 #include "CameraMovementComponent.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class RTS_V1_API UCameraMovementComponent : public UActorComponent
 {
@@ -33,10 +32,6 @@ public:
 		APlayerController* PlayerControllerRef;
 
 protected:
-	// Attributes
-
-	// Bools
-
 	// Is Movement Disabled?
 	UPROPERTY(Category = "Movement Var: Bools", BlueprintReadOnly)
 		bool bDisableCameraMovement;

@@ -4,13 +4,13 @@
 #include "GameFramework/Pawn.h"
 #include "Components/SphereComponent.h"
 #include <Runtime/Engine/Classes/Components/SphereComponent.h>
+#include "CameraMovementComponent.h"
+#include "Components/ActorComponent.h"
 
 #include "Operator.generated.h"
 
+class UCameraMovementComponent;
 
-/**
- *
- */
 UCLASS()
 class RTS_V1_API AOperator : public APawn
 {
@@ -25,6 +25,9 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	/*UPROPERTY(Category = "Movement Component", VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))*/
+	UCameraMovementComponent* PawnMovementComponent;
 
 protected:
 	// Collision Sphere Root Comp

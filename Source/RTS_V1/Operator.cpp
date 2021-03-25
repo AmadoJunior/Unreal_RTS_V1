@@ -1,19 +1,20 @@
 #include "Operator.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "CameraMovementComponent.h"
 #include "Engine/World.h"
 
 // Constructor
 AOperator::AOperator() {
 	// Set Defaults
-	DefaultZoomLength = 800.0f;
-	DefaultCameraRotation = FRotator(-75.0, 0.0, 0.0); // Pitch(Y), Yaw(Z), Roll(X)
+	DefaultZoomLength = 1350.0f;
+	DefaultCameraRotation = FRotator(-75.0f, 0.0f, 0.0f); // Pitch(Y), Yaw(Z), Roll(X)
 
 	// Root Component
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	SetRootComponent(CollisionSphere);
-	CollisionSphere->InitSphereRadius(32.0);
-	CollisionSphere->SetWorldScale3D(FVector(0.25, 0.25, 0.25));
+	CollisionSphere->InitSphereRadius(32.0f);
+	CollisionSphere->SetWorldScale3D(FVector(0.25f, 0.25f, 0.25f));
 
 	// TO-DO: The collision profile name used for map boundaries
 
@@ -41,6 +42,10 @@ AOperator::AOperator() {
 	// Ticks Every Frame
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	// Attach Movement Component
+	PawnMovementComponent = CreateDefaultSubobject<UCameraMovementComponent>(TEXT("CameraPawnMovementComponent"));
+
 }
 
 // Called every frame
@@ -69,8 +74,8 @@ void AOperator::SetArmLength(float ChangeAmount) {
 }
 
 void AOperator::SetArmRotation(FRotator ChangeAmount) {
-	const FRotator RotationMax = FRotator(-25.0, 0.0, 0.0); //Zoom In Rotation Max
-	const FRotator RotationMin = DefaultCameraRotation; //Zoom Out Rotation Min
+	const FRotator RotationMax = FRotator(-25.0f, 0.0f, 0.0f); //Zoom In Rotation Max
+	const FRotator RotationMin = DefaultCameraRotation; //Zoom Out Rotation Min (-75.0, 0.0, 0.0)
 
 	// Get "X", The Rotation Change
 	FRotator NewRotation = FRotator(CameraArm->GetTargetRotation() + ChangeAmount);
