@@ -2,7 +2,6 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "CameraMovementComponent.h"
-#include "Engine/World.h"
 
 // Constructor
 AOperator::AOperator() {

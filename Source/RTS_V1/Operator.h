@@ -3,9 +3,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/SphereComponent.h"
-#include <Runtime/Engine/Classes/Components/SphereComponent.h>
-#include "CameraMovementComponent.h"
-#include "Components/ActorComponent.h"
 
 #include "Operator.generated.h"
 

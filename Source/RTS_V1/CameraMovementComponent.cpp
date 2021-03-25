@@ -1,4 +1,5 @@
 #include "CameraMovementComponent.h"
+#include "Operator.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
