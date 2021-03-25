@@ -79,26 +79,26 @@ void UCameraMovementComponent::BasicMovementControl(float AxisValueX, float Axis
 	//If Camera !Disabled
 	if (!IsCameraDisable()) {
 		//Input On X && Y Axis
-		if (AxisValueX != 0 && AxisValueY != 0) {
+		if (AxisValueX != 0.0f && AxisValueY != 0.0f) {
 			MovementValueX = AxisValueX * GetCurrentMovementSpeed() * GetSpeedModifier();
-			MovementX = FVector(MovementValueX, 0, 0);
+			MovementX = FVector(MovementValueX, 0.0f, 0.0f);
 			MovementValueY = AxisValueY * GetCurrentMovementSpeed() * GetSpeedModifier();
-			MovementY = FVector(0, MovementValueY, 0);
+			MovementY = FVector(0.0f, MovementValueY, 0.0f);
 			//MovementX + MovementY => Diagonal Movement
 			CameraOwner->AddActorLocalOffset(MovementX + MovementY, true);
 		}
 		//If Input on W and S (Forward, Backward)
-		else if (AxisValueX != 0) {
+		else if (AxisValueX != 0.0f) {
 			//Movement Along X Axis
 			MovementValueX = AxisValueX * GetCurrentMovementSpeed() * GetSpeedModifier();
-			MovementX = FVector(MovementValueX, 0, 0);
+			MovementX = FVector(MovementValueX, 0.0f, 0.0f);
 			
 			CameraOwner->AddActorLocalOffset(MovementX, true);
 		}
 		//If Input on A and D (Left, Right);
-		else if (AxisValueY != 0) {
+		else if (AxisValueY != 0.0f) {
 			MovementValueY = AxisValueY * GetCurrentMovementSpeed() * GetSpeedModifier();
-			MovementY = FVector(0, MovementValueY, 0);
+			MovementY = FVector(0.0f, MovementValueY, 0.0f);
 
 			CameraOwner->AddActorLocalOffset(MovementY, true);
 		}
@@ -107,7 +107,11 @@ void UCameraMovementComponent::BasicMovementControl(float AxisValueX, float Axis
 
 //Camera Pan
 void UCameraMovementComponent::PanCamera(float RotationAmount) {
-	FRotator NewRotation = GetCameraRotation().Add(0, RotationAmount, 0);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::SanitizeFloat(RotationAmount));
+	
+	FRotator NewRotation = GetCameraRotation().Add(0.0f, RotationAmount, 0.0f);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, GetCameraRotation().ToString());
+
 	CameraOwner->SetActorRotation(NewRotation);
 }
 
@@ -204,7 +208,7 @@ void UCameraMovementComponent::EdgeScroll() {
 			CameraOwner->AddActorLocalOffset(MovementY, true);
 			SetCameraDisable(true);
 		}
-		else if (ProportionY >= .975) { //TOP
+		else if (ProportionY <= .025) { //BOTTOM
 			DeltaSpeedX = 0.0f;
 			DeltaSpeedY = 10.0f * GetSpeedModifier();
 
@@ -213,7 +217,7 @@ void UCameraMovementComponent::EdgeScroll() {
 			CameraOwner->AddActorLocalOffset(MovementX, true);
 			SetCameraDisable(true);
 		}
-		else if (ProportionY <= .025) { //BOTTOM
+		else if (ProportionY >= .975) { //TOP
 			DeltaSpeedX = 0.0f;
 			DeltaSpeedY = -10.0f * GetSpeedModifier();
 
@@ -221,6 +225,9 @@ void UCameraMovementComponent::EdgeScroll() {
 
 			CameraOwner->AddActorLocalOffset(MovementX, true);
 			SetCameraDisable(true);
+		}
+		else {
+			SetCameraDisable(false);
 		}
 	}
 		

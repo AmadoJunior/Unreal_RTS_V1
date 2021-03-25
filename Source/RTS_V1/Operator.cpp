@@ -43,7 +43,7 @@ AOperator::AOperator() {
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
 	// Attach Movement Component
-	PawnMovementComponent = CreateDefaultSubobject<UCameraMovementComponent>(TEXT("CameraPawnMovementComponent"));
+	MovementComponent = CreateDefaultSubobject<UCameraMovementComponent>(TEXT("CameraMovementComponent"));
 
 }
 
